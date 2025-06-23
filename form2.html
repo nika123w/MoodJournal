@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Play and Relax</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            transition: background-color 0.5s;
+        }
+
+        .game-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 500px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+<div class="game-container">
+    <h1>Relaxing Game</h1>
+    <div id="gameArea"></div>
+</div>
+
+<script>
+    const games = [game1, game2, game3, game4, game5];
+    const randomGame = games[Math.floor(Math.random() * games.length)];
+    randomGame();
+
+    function game1() {
+        document.body.style.backgroundColor = '#f0f4f8';
+        document.body.style.fontFamily = 'Verdana, sans-serif';
+
+        document.getElementById('gameArea').innerHTML = `
+            <p style="font-size: 18px; color: #555;">Click the button to make it grow!</p>
+            <button id="growButton" style="background-color: #6c5ce7; color: white; width:100px; height:50px;">Grow Me</button>
+        `;
+
+        let size = 100;
+        document.getElementById('growButton').addEventListener('click', () => {
+            size += 20;
+            document.getElementById('growButton').style.width = size + 'px';
+            document.getElementById('growButton').style.height = (size / 2) + 'px';
+        });
+    }
+
+    function game2() {
+        document.body.style.backgroundColor = '#ffeaa7';
+        document.body.style.fontFamily = 'Courier New, monospace';
+
+        document.getElementById('gameArea').innerHTML = `
+            <p style="font-size: 18px; color: #2d3436;">Click as many times as you can in 5 seconds!</p>
+            <button id="clickerButton" style="background-color: #d63031; color: white;">Click Me Fast!</button>
+            <p id="clickCount" style="font-size: 20px;">Clicks: 0</p>
+        `;
+
+        let count = 0;
+        let gameOver = false;
+
+        document.getElementById('clickerButton').addEventListener('click', () => {
+            if (!gameOver) {
+                count++;
+                document.getElementById('clickCount').textContent = 'Clicks: ' + count;
+            }
+        });
+
+        setTimeout(() => {
+            gameOver = true;
+            alert('Time is up! You clicked ' + count + ' times.');
+        }, 5000);
+    }
+
+    function game3() {
+        document.body.style.backgroundColor = '#a29bfe';
+        document.body.style.fontFamily = 'Georgia, serif';
+
+        document.getElementById('gameArea').innerHTML = `
+            <p style="font-size: 20px; color: white;">Click to change the background color and relax.</p>
+            <button id="colorButton" style="background-color: #00cec9; color: white;">Change Color</button>
+        `;
+
+        const colors = ['#fab1a0', '#fd79a8', '#55efc4', '#81ecec', '#ffeaa7'];
+        document.getElementById('colorButton').addEventListener('click', () => {
+            document.body.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        });
+    }
+
+
+    function game4() {
+    document.body.style.backgroundColor = '#0984e3';
+    document.body.style.fontFamily = 'Tahoma, sans-serif';
+
+    document.getElementById('gameArea').innerHTML = `
+        <p id="breatheText" style="font-size: 30px; color: #2d3436;">Breathe In</p>
+    `;
+
+    let isBreathingIn = true;
+    setInterval(() => {
+        document.getElementById('breatheText').textContent = isBreathingIn ? 'Breathe Out' : 'Breathe In';
+        isBreathingIn = !isBreathingIn;
+    }, 4000);
+}
+
+
+    function game5() {
+        document.body.style.backgroundColor = '#00b894';
+        document.body.style.fontFamily = 'Comic Sans MS, cursive';
+
+        document.getElementById('gameArea').innerHTML = `
+            <p style="font-size: 18px; color: white;">Catch the moving button!</p>
+            <button id="movingButton" style="position:relative; background-color: #fdcb6e; color: black;">Catch Me!</button>
+        `;
+
+        const button = document.getElementById('movingButton');
+
+        button.addEventListener('mouseover', () => {
+            button.style.left = Math.random() * 300 + 'px';
+            button.style.top = Math.random() * 100 + 'px';
+        });
+
+        button.addEventListener('click', () => {
+            alert('You caught me!');
+        });
+    }
+</script>
+</body>
+</html>
