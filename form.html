@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Journal Advice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://www.bu.edu/files/2021/03/10-Oddly-Relaxing-Videos-To-Help-Clear-Your-Mind-copy.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 50px;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.85);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 350px;
+        }
+
+        .relax-button {
+            height: 65px;
+            padding: 0 40px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 20px;
+            align-self: flex-start;
+            margin-top: 350px;
+            margin-left: -30px;
+            transition: background-color 0.3s;
+        }
+
+        .relax-button:hover {
+            background-color: #45a049;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 90%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        h2 {
+            margin-top: 30px;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        #adviceOutput {
+            min-height: 80px;
+            padding: 10px;
+            background-color: #e8f0fe;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            color: #333;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Get Your Advice</h1>
+
+    <form id="adviceForm">
+        <label for="mood">Mood:</label>
+        <input type="text" id="mood" name="mood" required>
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required> <label for="gender">Gender:</label>
+        <input type="text" id="gender" name="gender" required>
+
+        <button type="submit">Get Advice</button>
+    </form>
+
+    <h2>Advice:</h2>
+    <p id="adviceOutput"></p>
+</div>
+
+<button class="relax-button" onclick="window.open('form2.html', '_blank')">Play and Relax</button>
+
+<script>
+    document.getElementById('adviceForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const mood = document.getElementById('mood').value;
+        const age = document.getElementById('age').value;
+        const gender = document.getElementById('gender').value;
+
+        fetch('http://localhost:8080/advice?mood=' + encodeURIComponent(mood) +
+            '&age=' + encodeURIComponent(age) +
+            '&gender=' + encodeURIComponent(gender))
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('adviceOutput').textContent = data;
+            })
+            .catch(error => {
+                document.getElementById('adviceOutput').textContent = 'Error: ' + error;
+            });
+    });
+</script>
+</body>
+</html>
